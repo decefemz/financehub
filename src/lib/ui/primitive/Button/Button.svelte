@@ -3,7 +3,7 @@
 
 	type ButtonProps = {
 		variant: 'primary' | 'outline' | 'default' | 'ghost';
-		size: 'md';
+		size: 'md' | 'lg';
 		loading?: boolean;
 		to?: string;
 	};
@@ -16,13 +16,13 @@
 
 <svelte:element
 	this={to ? 'a' : 'button'}
-	{...$$restProps}
 	href={to}
 	disabled={loading || $$restProps.disabled}
 	class="
         button
         button--variant-{variant}
-        button--size-{size}
+        button--size-{size} 
+        {$$restProps.class}
     "
 >
 	{#if loading}
@@ -34,24 +34,21 @@
 
 <style>
 	.button {
-		--primary-border-color: var(--grey-300);
-
 		--button--size-md--padding: var(--space-xs) var(--space-md);
 		--button--size-md--font-size: var(--font-size-md);
 		--button--size-md--height: calc(var(--space-xl) - var(--space-xs));
-
+		--button--size-lg--height: calc(var(--size-xl) + var(--space-sm));
 		--button--variant-primary--bg-color: var(--indigo-400);
 		--button--variant-primary--bg-color--hover: var(--indigo-700);
 		--button--variant-primary--bg-color--active: var(--indigo-400);
-		--button--variant-primary--text-color: white;
+		--button--variant-primary--color-text: white;
 		--button--variant-primary--border-color: var(--indigo-400);
-
 		--button--variant-outline--border-color: var(--primary-border-color);
 		--button--variant-outline--border-color--active: var(--indigo-700);
 		--button--variant-outline--border-color--hover: var(--indigo-400);
-		--button--variant-outline--text-color: var(--text-color);
-
-		--button--variant-default--text-color: var(--text-color);
+		--button--variant-outline--color-text: var(--color-text);
+		--button--variant-default--color-text: var(--color-text);
+		--button--size-md--padding: var(--space-sm) var(--size-lg);
 
 		color: var(--text--color);
 		font-weight: var(--font-weight-regular);
@@ -70,12 +67,19 @@
 		font-size: var(--button--size-md--font-size);
 		height: var(--button--size-md--height);
 	}
+	.button--size-lg {
+		height: var(--button--size-lg--height);
+	}
+	.button--size-lg :global(svg) {
+		height: var(--size-lg);
+		width: var(--size-lg);
+	}
 	/* <------ SIZE ------> */
 
 	/* <------ VARIANT ------> */
 	.button--variant-primary {
 		background-color: var(--button--variant-primary--bg-color);
-		color: var(--button--variant-primary--text-color);
+		color: var(--button--variant-primary--color-text);
 		border-color: var(--button--variant-primary--border-color);
 	}
 	.button--variant-primary:hover {
@@ -90,13 +94,13 @@
 		background-color: var(--button--variant-primary--bg-color);
 	}
 	.button--variant-primary :global(svg) {
-		fill: var(--button--variant-primary--text-color);
-		color: var(--button--variant-primary--text-color);
+		fill: var(--button--variant-primary--color-text);
+		color: var(--button--variant-primary--color-text);
 	}
 
 	.button--variant-outline {
 		background-color: transparent;
-		color: var(--button--variant-outline--text-color);
+		color: var(--button--variant-outline--color-text);
 		border-color: var(--button--variant-outline--border-color);
 	}
 	.button--variant-outline:hover {
@@ -108,7 +112,7 @@
 
 	.button--variant-default {
 		background: transparent;
-		color: var(--button--variant-default--text-color);
+		color: var(--button--variant-default--color-text);
 	}
 	/* <------ VARIANT ------> */
 </style>

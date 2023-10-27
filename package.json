@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "vite dev --host",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -29,6 +29,11 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"commitizen": "^4.3.0"
+		"@fontsource/inter": "^5.0.15",
+		"chart.js": "^4.4.0",
+		"chartjs-plugin-annotation": "^3.0.1",
+		"commitizen": "^4.3.0",
+		"svelte-chartjs": "^3.1.2",
+		"svelte-material-icons": "^3.0.5"
 	}
 }

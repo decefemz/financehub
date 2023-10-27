@@ -1,3 +1,6 @@
 :root {
-	--text--color: var(--grey-900);
+	--color-text: var(--grey-900);
+	--color-text-weakest: var(--grey-500);
+
+	--primary-border-color: var(--grey-300);
 }

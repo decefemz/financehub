@@ -1,0 +1,11 @@
+{
+	"explorer.sortOrder": "filesFirst",
+	"workbench.editor.labelFormat": "short",
+	"[svelte]": {
+		"editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+	},
+	"editor.defaultFormatter": "svelte.svelte-vscode",
+	"svelte.enable-ts-plugin": true,
+	"svelte.plugin.svelte.defaultScriptLanguage": "ts",
+	"editor.formatOnSave": true
+}

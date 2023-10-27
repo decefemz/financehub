@@ -53,8 +53,13 @@
 	/*<------ FONT-WEIGHT ------>*/
 	/*<------  BORDER-RADIUS ------>*/
 	--border-radius-sm: 0.125rem;
-	--border-radius-md: 0.3rem;
-	--border-radius-lg: 0.5rem;
+	--border-radius-md: 0.5rem;
+	--border-radius-lg: 1rem;
 	--border-radius-xl: 9999px;
-	/*<------  BORDER-RADIUS ------>*/
+	/*<------ BORDER-RADIUS ------>*/
+	/*<------ BOX-SHADOW ------>*/
+	--box-shadow-sm: rgba(0, 0, 0, 0.04) 0px 2px 4px;
+	--box-shadow-md: rgb(0 0 0 / 2%) 0px 0px 10px 8px;
+	--box-shadow-lg: rgb(0 0 0 / 40%) 0px 0px 50px 8px;
+	/*<------ BOX-SHADOW ------>*/
 }
