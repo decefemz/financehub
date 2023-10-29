@@ -87,7 +87,7 @@
 				</form>
 				
 				{#if otherNewsLoading}
-					<Spinner/>
+					loading...
 				{:else}
 					{#each otherNews as n}
 						<ArticleDisplay
@@ -117,6 +117,9 @@
 </main>
 
 <style>
+	:global(.spinner){
+		color:var(--indigo-400);
+	}
 	main {
 		padding: var(--space-md);
 		display: flex;

@@ -68,8 +68,8 @@
 			<Text size="sm" weight="strong">
 				{title}
 			</Text>
-			<Text size="sm" class="description">
-				{truncate(description, 350)}
+			<Text size="xs" class="description">
+				{truncate(description, 100)}
 			</Text>
 		</div>
 	</div>
@@ -159,13 +159,16 @@
 		padding: var(--space-sm);
 		padding-top: 0;
 		overflow: hidden;		
-		gap:var(--space-sm);
+		gap:var(--space-xs);
 	}
 	
 	.article-display--variant-detailed__img {
 		object-fit: cover;
 		aspect-ratio: 16/9;
 		max-width: 200px;
+		max-height: 120px;
+		width: 200px;
+		height: 120px;
 		border-radius: var(--border-radius-md);
 	}
 	@media (max-width: 768px) {
