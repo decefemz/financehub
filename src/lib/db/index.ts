@@ -1,25 +1,25 @@
 import {
-	PlanetScalePreparedQueryHKT,
-	PlanetscaleQueryResultHKT,
+	type PlanetScalePreparedQueryHKT,
+	type PlanetscaleQueryResultHKT,
 	drizzle
 } from 'drizzle-orm/planetscale-serverless';
 import { connect } from '@planetscale/database';
-import Models from './models';
-import { MySqlTransaction } from 'drizzle-orm/mysql-core';
-import { ExtractTablesWithRelations } from 'drizzle-orm';
+import Models from '../models';
+import type { MySqlTransaction } from 'drizzle-orm/mysql-core';
+import type { ExtractTablesWithRelations } from 'drizzle-orm';
+import { DB_HOST, DB_PASSWORD, DB_USERNAME } from '$env/static/private';
 
-dotenv.config();
 
 const connection = connect({
-	host: process.env.DB_HOST,
-	username: process.env.DB_USERNAME,
-	password: process.env.DB_PASSWORD
+	host: DB_HOST,
+	username: DB_USERNAME,
+	password: DB_PASSWORD
 });
 
 console.log({
 	host: process.env,
-	username: process.env.DB_USERNAME,
-	password: process.env.DB_PASSWORD
+	username: DB_USERNAME,
+	password: DB_PASSWORD
 });
 
 const DB = drizzle(connection);
