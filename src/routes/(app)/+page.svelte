@@ -189,6 +189,10 @@
 	.live-quotes {
 		flex: 1;
 		min-width: 300px;
+		background: white;
+		border-radius: var(--border-radius-md);
+		border: 1px solid var(--primary-border-color);
+		padding: var(--space-md);
 	}
 
 	.main-articles-container {

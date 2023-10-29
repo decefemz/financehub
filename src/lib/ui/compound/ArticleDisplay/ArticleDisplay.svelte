@@ -43,7 +43,7 @@
 			<Text size="sm" weight="strong">
 				{title}
 			</Text>
-			<Text size="sm" color="weakest">
+			<Text size="sm" color="weak">
 				{articleSource.name}
 			</Text>
 		</div>
@@ -52,7 +52,7 @@
 	<div class="article-display--variant-detailed {$$restProps.class}">
 		<img class="article-display--variant-detailed__img" alt={image.alt} src={image.url} />
 		<div class="article-display--variant-detailed__details">
-			<Text size="sm" color="weakest">
+			<Text size="sm" color="weak">
 				{articleSource.name}
 			</Text>
 			<Text size="sm" weight="strong">
@@ -108,6 +108,7 @@
 		flex-direction: column;
 		flex: 1;
 		padding: var(--space-sm);
+		gap: var(--space-xs);
 		padding-top: 0;
 	}
 	.article-display--variant-tiled__img {

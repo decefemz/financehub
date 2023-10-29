@@ -34,6 +34,8 @@ export default async function getStockData(
 
 		const data: any = await response.json();
 
+		if (!data.chart.result[0]) throw Errors.Market.tickerNotFound();
+
 		chartData.currency = data.chart.result[0].meta.currency;
 		chartData.symbol = data.chart.result[0].meta.symbol;
 		chartData.exchangeName = data.chart.result[0].meta.exchangeName;

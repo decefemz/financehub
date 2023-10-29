@@ -16,6 +16,7 @@
 
 <svelte:element
 	this={to ? 'a' : 'button'}
+	on:click
 	href={to}
 	disabled={loading || $$restProps.disabled}
 	class="

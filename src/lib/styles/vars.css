@@ -1,6 +1,7 @@
 :root {
 	--color-text: var(--grey-900);
 	--color-text-weakest: var(--grey-500);
-
+	--color-text-weak: var(--grey-700);
 	--primary-border-color: var(--grey-300);
+	--max-width: 1200px;
 }
