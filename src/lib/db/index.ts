@@ -9,7 +9,6 @@ import type { MySqlTransaction } from 'drizzle-orm/mysql-core';
 import type { ExtractTablesWithRelations } from 'drizzle-orm';
 import { DB_HOST, DB_PASSWORD, DB_USERNAME } from '$env/static/private';
 
-
 const connection = connect({
 	host: DB_HOST,
 	username: DB_USERNAME,

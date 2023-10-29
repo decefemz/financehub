@@ -31,7 +31,7 @@ export default async function getLinkedArticles({
 
 	if (countries)
 		params.query.$query.$and.push({
-			$or: countries.map((country) => ({locationUri: countryUri[country]}))
+			$or: countries.map((country) => ({ locationUri: countryUri[country] }))
 		});
 
 	const response = await fetch('https://newsapi.ai/api/v1/article/getArticles', {
@@ -59,7 +59,7 @@ export default async function getLinkedArticles({
 				name: article.source.title,
 				url: article.source.uri
 			},
-			keywords: (article.concepts)?article.concepts.map((concept: any) => concept.label.eng):[],
+			keywords: article.concepts ? article.concepts.map((concept: any) => concept.label.eng) : [],
 			countries: countries
 		} as _LinkedArticle;
 	});
