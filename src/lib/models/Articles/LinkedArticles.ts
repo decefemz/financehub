@@ -1,4 +1,4 @@
-import { date, mysqlTable, text, varchar, char } from 'drizzle-orm/mysql-core';
+import { date, mysqlTable, text, varchar, char, int, index } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
 import { ArticleSources } from './ArticleSources';
 
@@ -13,10 +13,16 @@ export const LinkedArticles = mysqlTable('linked_articles', {
 	keywords: text('keywords'),
 	countries: text('countries'),
 	categories: text('categories'),
-	sourceID: char('source_id', { length: 26 }).notNull()
-	// sentiment:  article.sentiment,
-	//     relevance: article.relevance,
-});
+	sourceID: char('source_id', { length: 26 }).notNull(),
+	sentiment: int("sentiment"),
+	relevance: int("relevance"),
+},
+	(t) => {
+		return {
+			countriesIndex: index('countries_index').on(t.countries)
+		};
+	}
+);
 
 export const LinkedArticlesRelations = relations(LinkedArticles, ({ one }) => ({
 	source: one(ArticleSources, {

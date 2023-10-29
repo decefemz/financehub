@@ -8,7 +8,6 @@ export const ArticleSources = mysqlTable(
 		id: char('id', { length: 26 }).primaryKey(),
 		name: varchar('name', { length: 255 }).notNull(),
 		url: varchar('url', { length: 512 }).notNull().unique('unique_article_src_url'),
-		faviconSrc: varchar('favicon_src', { length: 1024 })
 	},
 	(t) => {
 		return {

@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1698547843852,
+      "tag": "0000_kind_timeslip",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1698547909732,
+      "tag": "0001_opposite_sharon_carter",
+      "breakpoints": true
+    }
+  ]
+}

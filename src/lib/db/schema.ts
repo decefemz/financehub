@@ -1,9 +1,9 @@
-import type { AccountProfileRelations, UserAccounts } from '$lib/models/Accounts/UserAccounts';
-import type { UserProfiles, ProfileAccountRelations } from '$lib/models/Accounts/UserProfiles';
-import type { ArticleSources, ArticleSourceRelations } from '$lib/models/Articles/ArticleSources';
-import type { LinkedArticles, LinkedArticlesRelations } from '$lib/models/Articles/LinkedArticles';
-import type { OriginalArticles } from '$lib/models/Articles/OriginalArticles';
-import type { Sessions, SessionRelations } from '$lib/models/Session/Session';
+import { AccountProfileRelations, UserAccounts } from '../models/Accounts/UserAccounts';
+import { UserProfiles, ProfileAccountRelations } from '../models/Accounts/UserProfiles';
+import { ArticleSources, ArticleSourceRelations } from '../models/Articles/ArticleSources';
+import { LinkedArticles, LinkedArticlesRelations } from '../models/Articles/LinkedArticles';
+import { OriginalArticles } from '../models/Articles/OriginalArticles';
+import { Sessions, SessionRelations } from '../models/Session/Session';
 
 export {
 	LinkedArticles,

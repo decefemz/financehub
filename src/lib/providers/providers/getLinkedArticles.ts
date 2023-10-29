@@ -9,6 +9,7 @@ export default async function getLinkedArticles({
 		articlesSortBy: 'rel',
 		includeArticleSocialScore: true,
 		includeArticleCategories: true,
+		includeArticleConcepts: true,
 		includeArticleLocation: true,
 		includeArticleImage: true,
 		includeArticleLinks: true,
@@ -17,6 +18,9 @@ export default async function getLinkedArticles({
 		query: {
 			$query: {
 				$and: [
+					{
+						categoryUri: "dmoz/Business"
+					},
 					{
 						lang: 'eng'
 					}
@@ -51,21 +55,22 @@ export default async function getLinkedArticles({
 			url: article.url,
 			title: article.title,
 			content: article.body,
-			description: article.body,
+			description: article?.description ?? "",
 			imageSrc: article.image,
 			sentiment: article.sentiment,
 			relevance: article.relevance,
+			categories: article?.categories ? article.categories.map((category: any) => category.label) : [],
 			source: {
 				name: article.source.title,
 				url: article.source.uri
 			},
-			keywords: article.concepts ? article.concepts.map((concept: any) => concept.label.eng) : [],
+			keywords: article?.concepts ? article.concepts.map((concept: any) => concept.label.eng) : [],
 			countries: countries
 		} as _LinkedArticle;
 	});
 }
 
-type countryCode = 'zw' | 'za' | 'zm';
+export type countryCode = 'zw' | 'za' | 'zm';
 
 interface GetLinkedArticlesParams {
 	countries?: countryCode[];
@@ -93,4 +98,5 @@ interface _LinkedArticle {
 	};
 	keywords: string[];
 	countries: string[];
+	categories: string[]
 }
