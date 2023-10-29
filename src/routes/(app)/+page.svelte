@@ -4,144 +4,112 @@
 	import ArticleDisplay from '$lib/ui/compound/ArticleDisplay';
 	import Button from '$lib/ui/primitive/Button';
 	import Text from '$lib/ui/primitive/Text';
+	import { onMount } from 'svelte';
+	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from './news/$types';
+	import Spinner from '$lib/ui/primitive/Spinner/Spinner.svelte';
 	export let data: PageData;
+	let form:HTMLFormElement;
+
+	let otherNewsLoading:boolean = false;
+	let otherNews:any[] = [];
+
+	onMount(()=>{
+		form.requestSubmit();
+	})
+
+	const onSubmit: SubmitFunction = () => {
+		otherNewsLoading = true;
+		return async (e) => {
+			otherNewsLoading = false;
+			const { update, result }: { update: typeof e.update; result: any } = e;
+			otherNews = result.data.articles;
+			await update({ reset: false });
+		};
+	};
+	
+	console.log(data);
 </script>
 
 <main>
 	<section class="market-summary">
-		{#await data.lazy.stockData}
-			loading
-		{:then sd}
-			<MarketSummary stockData={sd} />
-		{:catch error}
-			An error has occured.
-		{/await}
+			<MarketSummary stockData={data.marketOverview} />
 	</section>
-	<div class="article-quotes" />
-
-	<div class="article-quotes">
+	<div class="inner-container">
 		<div class="articles-container">
-			<section class="main-articles-container">
+			<section class="featured-articles-container">
 				<ArticleDisplay
 					variant="full"
-					title="South African rand falls as markets await US employment data"
+					title={data.articles.featuredArticles[0].title}
 					articleSource={{
-						name: 'Reuters',
-						url: 'https://www.reuters.com/world/africa/south-african-rand-falls-markets-await-us-employment-data-2021-10-08/'
+						name: data.articles.featuredArticles[0].source.name,
+						url: data.articles.featuredArticles[0].source.url
 					}}
 					image={{
-						url: 'https://www.reuters.com/resizer/VV_H-Z2NRkCt5E7JpXDnxdjGck0=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/Z7OUSBHECZMJVEHQT7G2AZVSQU.jpg',
-						alt: 'c'
+						url: data.articles.featuredArticles[0].imageSrc,
+						alt: `Header image for article titled: ${data.articles.featuredArticles[0].title}`
 					}}
-					url="https://www.reuters.com/world/africa/south-african-rand-falls-markets-await-us-employment-data-2021-10-08/"
-					description="The South African rand weakened on Friday as investors awaited U.S. employment data for clues on the Federal Reserve's tapering timeline, while stocks were flat."
+					url={data.articles.featuredArticles[0].url}
+					description={data.articles.featuredArticles[0].content}
 					class="featured-article"
 				/>
 
-				<div class="main-articles__side-articles-container">
-					<ArticleDisplay
-						variant="tiled"
-						title="South African rand falls as markets await US employment data"
-						articleSource={{
-							name: 'Reuters',
-							url: 'https://www.reuters.com/world/africa/south-african-rand-falls-markets-await-us-employment-data-2021-10-08/'
-						}}
-						image={{
-							url: 'https://www.reuters.com/resizer/VV_H-Z2NRkCt5E7JpXDnxdjGck0=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/Z7OUSBHECZMJVEHQT7G2AZVSQU.jpg',
-							alt: 'c'
-						}}
-						url="https://www.reuters.com/world/africa/south-african-rand-falls-markets-await-us-employment-data-2021-10-08/"
-						description="The South African rand weakened on Friday as investors awaited U.S. employment data for clues on the Federal Reserve's tapering timeline, while stocks were flat."
-						class="featured-article"
-					/>
-
-					<ArticleDisplay
-						variant="tiled"
-						title="South African rand falls as markets await US employment data"
-						articleSource={{
-							name: 'Reuters',
-							url: 'https://www.reuters.com/world/africa/south-african-rand-falls-markets-await-us-employment-data-2021-10-08/'
-						}}
-						image={{
-							url: 'https://www.reuters.com/resizer/VV_H-Z2NRkCt5E7JpXDnxdjGck0=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/Z7OUSBHECZMJVEHQT7G2AZVSQU.jpg',
-							alt: 'c'
-						}}
-						url="https://www.reuters.com/world/africa/south-african-rand-falls-markets-await-us-employment-data-2021-10-08/"
-						description="The South African rand weakened on Friday as investors awaited U.S. employment data for clues on the Federal Reserve's tapering timeline, while stocks were flat."
-						class="featured-article"
-					/>
-
-					<ArticleDisplay
-						variant="tiled"
-						title="South African rand falls as markets await US employment data"
-						articleSource={{
-							name: 'Reuters',
-							url: 'https://www.reuters.com/world/africa/south-african-rand-falls-markets-await-us-employment-data-2021-10-08/'
-						}}
-						image={{
-							url: 'https://www.reuters.com/resizer/VV_H-Z2NRkCt5E7JpXDnxdjGck0=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/Z7OUSBHECZMJVEHQT7G2AZVSQU.jpg',
-							alt: 'c'
-						}}
-						url="https://www.reuters.com/world/africa/south-african-rand-falls-markets-await-us-employment-data-2021-10-08/"
-						description="The South African rand weakened on Friday as investors awaited U.S. employment data for clues on the Federal Reserve's tapering timeline, while stocks were flat."
-						class="featured-article"
-					/>
+				<div class="side-articles-container">
+					{#each data.articles.featuredArticles as a,i}
+						{#if i !== 0}
+						<ArticleDisplay
+							variant="tiled"
+							title={a.title}
+							articleSource={{
+								name: a?.source?.name,
+								url: a?.source?.url
+							}}
+							image={{
+								url: a.imageSrc,
+								alt: `Header image for article titled: ${a.title}`
+							}}
+							url={a.url}
+							description={a.content}
+							class="featured-article"
+						/>
+						{/if}
+					{/each}
 				</div>
 			</section>
+
 			<section class="other-articles-container">
 				<Text size="xl" weight="medium">More financial news</Text>
 
-				<div class="news-filter-container">
-					<Button on:click={() => console.log('clicked')} variant="ghost">Top stories</Button>
-					<Button variant="outline">Local markets</Button>
-					<Button variant="outline">World markets</Button>
-				</div>
-				<ArticleDisplay
-					variant="detailed"
-					title="South African rand falls as markets await US employment data"
-					articleSource={{
-						name: 'Reuters',
-						url: 'https://www.reuters.com/world/africa/south-african-rand-falls-markets-await-us-employment-data-2021-10-08/'
-					}}
-					image={{
-						url: 'https://www.reuters.com/resizer/VV_H-Z2NRkCt5E7JpXDnxdjGck0=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/Z7OUSBHECZMJVEHQT7G2AZVSQU.jpg',
-						alt: 'c'
-					}}
-					url="https://www.reuters.com/world/africa/south-african-rand-falls-markets-await-us-employment-data-2021-10-08/"
-					description="The South African rand weakened on Friday as investors awaited U.S. employment data for clues on the Federal Reserve's tapering timeline, while stocks were flat."
-					class="featured-article"
-				/>
+				<form bind:this={form} use:enhance={onSubmit} action="/news" method="POST"  class="news-filter-container" >
+					<Button size="md" on:click={() => console.log('clicked')} variant="outline">Top stories</Button>
+					<Button size="md" variant="ghost">Local markets</Button>
+					<Button size="md" variant="outline">World markets</Button>
+				</form>
+				
+				{#if otherNewsLoading}
+					<Spinner/>
+				{:else}
+					{#each otherNews as n}
+						<ArticleDisplay
+							variant="detailed"
+							title={n.title}
+							articleSource={{
+								name: n?.source?.name,
+								url: n?.source?.url
+							}}
+							image={{
+								url: n.imageSrc,
+								alt: `Header image for article titled: ${n.title}`
+							}}
+							url={n.url}
+							description={n.content}
+							class="featured-article"
+						/>
+					{/each}
+				{/if}
+				
 
-				<ArticleDisplay
-					variant="detailed"
-					title="South African rand falls as markets await US employment data"
-					articleSource={{
-						name: 'Reuters',
-						url: 'https://www.reuters.com/world/africa/south-african-rand-falls-markets-await-us-employment-data-2021-10-08/'
-					}}
-					image={{
-						url: 'https://www.reuters.com/resizer/VV_H-Z2NRkCt5E7JpXDnxdjGck0=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/Z7OUSBHECZMJVEHQT7G2AZVSQU.jpg',
-						alt: 'c'
-					}}
-					url="https://www.reuters.com/world/africa/south-african-rand-falls-markets-await-us-employment-data-2021-10-08/"
-					description="The South African rand weakened on Friday as investors awaited U.S. employment data for clues on the Federal Reserve's tapering timeline, while stocks were flat."
-					class="featured-article"
-				/>
-				<ArticleDisplay
-					variant="detailed"
-					title="South African rand falls as markets await US employment data"
-					articleSource={{
-						name: 'Reuters',
-						url: 'https://www.reuters.com/world/africa/south-african-rand-falls-markets-await-us-employment-data-2021-10-08/'
-					}}
-					image={{
-						url: 'https://www.reuters.com/resizer/VV_H-Z2NRkCt5E7JpXDnxdjGck0=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/Z7OUSBHECZMJVEHQT7G2AZVSQU.jpg',
-						alt: 'c'
-					}}
-					url="https://www.reuters.com/world/africa/south-african-rand-falls-markets-await-us-employment-data-2021-10-08/"
-					description="The South African rand weakened on Friday as investors awaited U.S. employment data for clues on the Federal Reserve's tapering timeline, while stocks were flat."
-					class="featured-article"
-				/>
+				
 			</section>
 		</div>
 		<div class="live-quotes __hidden-at-768px">live quotes section</div>
@@ -156,8 +124,7 @@
 		align-items: center;
 		justify-content: center;
 		width: 100%;
-		background-color: var(--grey-100);
-		min-width: 1000px;
+		min-width: 1200px;
 		overflow-x: auto;
 	}
 
@@ -167,7 +134,7 @@
 		justify-content: center;
 		width: 100%;
 	}
-	.article-quotes {
+	.inner-container {
 		display: flex;
 		gap: var(--space-md);
 		display: flex;
@@ -195,7 +162,7 @@
 		padding: var(--space-md);
 	}
 
-	.main-articles-container {
+	.featured-articles-container {
 		flex: 3;
 		gap: var(--space-md);
 		padding: var(--space-md);
@@ -206,7 +173,7 @@
 		justify-content: center;
 	}
 
-	.main-articles__side-articles-container {
+	.side-articles-container {
 		display: flex;
 		flex-direction: column;
 		flex: 1;
@@ -236,11 +203,11 @@
 		main {
 			min-width: 300px;
 		}
-		.main-articles-container {
+		.featured-articles-container {
 			flex-direction: column;
 			gap: var(--space-md);
 		}
-		.main-articles__side-articles-container {
+		.side-articles-container {
 			display: grid;
 			grid-template-columns: repeat(2, 1fr);
 			gap: var(--space-md);
@@ -255,15 +222,13 @@
 			min-width: 300px;
 			padding-inline: 0;
 		}
-		.main-articles__side-articles-container {
+		.side-articles-container {
 			display: flex;
 			flex-direction: row;
 			overflow-y: scroll;
 			gap: var(--space-sm);
 		}
-		.main-articles__side-articles-container :global(.featured-article) {
-			min-width: 220px;
-		}
+		
 		.other-articles-container {
 			padding-top: 0;
 		}

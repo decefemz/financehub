@@ -18,19 +18,5 @@ export const navPages: {
 		slug: 'funding',
 		url: '/'
 	},
-	{
-		title: 'Invest',
-		slug: 'invest',
-		url: '/'
-	},
-	{
-		title: 'Moneysend',
-		slug: 'moneysend',
-		url: '/'
-	},
-	{
-		title: 'Crypto',
-		slug: 'crypto',
-		url: '/'
-	}
+	
 ];

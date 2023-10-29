@@ -23,6 +23,7 @@
 		class="__visible-at-768px __hidden-at-500px icon-logo"
 		style=" min-width:var(--input--size-md--height); 
                 width:33px; 
+				min-width:33px; 
                 height:33px; 
                 border-radius:var(--border-radius-md); 
                 background:var(--grey-200);

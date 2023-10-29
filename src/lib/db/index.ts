@@ -15,12 +15,6 @@ const connection = connect({
 	password: DB_PASSWORD
 });
 
-console.log({
-	host: process.env,
-	username: DB_USERNAME,
-	password: DB_PASSWORD
-});
-
 const DB = drizzle(connection);
 
 export default DB;

@@ -3,7 +3,8 @@
 
 	type ButtonProps = {
 		variant: 'primary' | 'outline' | 'default' | 'ghost';
-		size: 'md' | 'lg';
+		size: "sm"|'md' | 'lg';
+		shape:"circle"|"pill";
 		loading?: boolean;
 		to?: string;
 	};
@@ -11,6 +12,7 @@
 	export let variant: ButtonProps['variant'] = 'primary';
 	export let size: ButtonProps['size'] = 'md';
 	export let to: ButtonProps['to'] = undefined;
+	export let shape:ButtonProps["shape"] = "pill";
 	export let loading: ButtonProps['loading'] = false;
 </script>
 
@@ -22,6 +24,7 @@
 	class="
         button
         button--variant-{variant}
+		button--shape-{shape}
         button--size-{size} 
         {$$restProps.class}
     "
@@ -35,9 +38,13 @@
 
 <style>
 	.button {
+		--button--size-sm--height:calc( var(--size-xl) - var(--size-xs));
+		--button--size-sm--padding:var(--size-xs) var(--size-md);
+		--button--size-sm--font-size:var(--font-size-sm);
+
+		--button--size-md--font-size:var(--font-size-md);
 		--button--size-md--padding: var(--space-xs) var(--space-md);
-		--button--size-md--font-size: var(--font-size-md);
-		--button--size-md--height: calc(var(--space-xl) - var(--space-xs));
+		--button--size-md--height: var(--size-xl);
 		--button--size-lg--height: calc(var(--size-xl) + var(--space-sm));
 		--button--variant-primary--bg-color: var(--indigo-400);
 		--button--variant-primary--bg-color--hover: var(--indigo-700);
@@ -49,7 +56,13 @@
 		--button--variant-outline--border-color--hover: var(--indigo-400);
 		--button--variant-outline--color-text: var(--color-text);
 		--button--variant-default--color-text: var(--color-text);
-		--button--size-md--padding: var(--space-sm) var(--size-lg);
+		
+		--button--variant-ghost--border-color:var(--indigo-50);
+        --button--variant-ghost--bg-color:var(--indigo-50);
+        --button--variant-ghost--text-color:var(--indigo-400);
+        --button--variant-ghost--active-bg-color:var(--indigo-50);
+        --button--variant-ghost--hover-bg-color:var(--indigo-75);
+        --button--variant-ghost--focus-outline-color:var(--indigo-100);
 
 		color: var(--text--color);
 		font-weight: var(--font-weight-regular);
@@ -63,8 +76,14 @@
 	}
 
 	/* <------ SIZE ------> */
+	.button--size-sm {
+		padding: var(--button--size-sm--padding);
+		font-size: var(--button--size-sm--font-size);
+		height: var(--button--size-sm--height);
+	}
 	.button--size-md {
 		padding: var(--button--size-md--padding);
+		text-wrap: nowrap;
 		font-size: var(--button--size-md--font-size);
 		height: var(--button--size-md--height);
 	}
@@ -115,5 +134,23 @@
 		background: transparent;
 		color: var(--button--variant-default--color-text);
 	}
+
+	.button--variant-ghost{
+        background-color: var(--button--variant-ghost--bg-color);
+        color:var(--button--variant-ghost--text-color);
+        fill:var(--button--variant-ghost--text-color);
+        border-color: var(--button--variant-ghost--bg-color);
+    }
+    .button--variant-ghost:hover{
+        background-color: var(--button--variant-ghost--hover-bg-color);
+    }
+    .button--variant-ghost:active{
+        background-color: var(--button--variant-ghost--active-bg-color);
+    }
+    
 	/* <------ VARIANT ------> */
+	.button--shape-circle{
+		padding:0;
+		aspect-ratio: 1/1;
+	}
 </style>

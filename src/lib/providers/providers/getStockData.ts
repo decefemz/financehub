@@ -9,7 +9,7 @@ export default async function getStockData(
 	const requestURL = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURI(
 		ticker
 	)}?symbol=${ticker}&period1=${startPeriod}&period2=${endPeriod}&interval=${interval}`;
-
+	console.log(requestURL)
 	let chartData: StockData = {
 		currency: '',
 		symbol: '',
@@ -43,6 +43,7 @@ export default async function getStockData(
 		chartData.previousClose = data.chart.result[0].meta.chartPreviousClose;
 		chartData.currentTradingPeriod = data.chart.result[0].meta.currentTradingPeriod.regular;
 
+		if(!data.chart.result[0]?.timestamp?.length) return chartData;
 		data.chart.result[0]?.timestamp.forEach((timestamp: number, index: number) => {
 			chartData.OHLCVData.push({
 				timestamp,
@@ -58,6 +59,7 @@ export default async function getStockData(
 		});
 		return chartData;
 	} catch (e) {
+		console.log(e)
 		throw e;
 	}
 }

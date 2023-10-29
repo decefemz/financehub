@@ -2,6 +2,11 @@
 	--color-text: var(--grey-900);
 	--color-text-weakest: var(--grey-500);
 	--color-text-weak: var(--grey-700);
+
+	--color-text-white: white;
+	--color-text-white-weakest: var(--grey-50);
+	--color-text-white-weak: var(--grey-100);
+	
 	--primary-border-color: var(--grey-300);
 	--max-width: 1200px;
 }

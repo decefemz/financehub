@@ -1,5 +1,15 @@
 <script lang="ts">
+	import Image from '$lib/ui/primitive/Image/Image.svelte';
 	import Text from '../../primitive/Text';
+
+	function truncate(inputString: string, maxLength: number): string {
+    if (inputString.length <= maxLength) {
+        return inputString;
+    } else {
+        return inputString.slice(0, maxLength - 3) + '...';
+    }
+}
+
 
 	interface ArticleDisplayProps {
 		variant: 'full' | 'tiled' | 'detailed';
@@ -25,29 +35,29 @@
 </script>
 
 {#if variant === 'full'}
-	<div class="article-display--variant-full {$$restProps.class}">
-		<img class="article-display--variant-full__img" alt={image.alt} src={image.url} />
+	<a href="/news" class="article-display--variant-full {$$restProps.class}">
+		<Image class="article-display--variant-full__img" alt={image.alt} src={image.url} />
 		<div class="article-display--variant-full__overlay">
 			<Text>
 				{articleSource.name}
 			</Text>
-			<Text size="xl">
+			<Text size="xl" weight="medium">
 				{title}
 			</Text>
 		</div>
-	</div>
+	</a>
 {:else if variant === 'tiled'}
-	<div class="article-display--variant-tiled {$$restProps.class}">
-		<img class="article-display--variant-tiled__img" alt={image.alt} src={image.url} />
+	<a href="/news" class="article-display--variant-tiled {$$restProps.class}">
+		<Image class="article-display--variant-tiled__img" alt={image.alt} src={image.url} />
 		<div class="article-display--variant-tiled__details">
-			<Text size="sm" weight="strong">
+			<Text size="md" weight="strong">
 				{title}
 			</Text>
 			<Text size="sm" color="weak">
 				{articleSource.name}
 			</Text>
 		</div>
-	</div>
+	</a>
 {:else if variant === 'detailed'}
 	<div class="article-display--variant-detailed {$$restProps.class}">
 		<img class="article-display--variant-detailed__img" alt={image.alt} src={image.url} />
@@ -58,48 +68,55 @@
 			<Text size="sm" weight="strong">
 				{title}
 			</Text>
-			<Text size="sm">
-				{description}
+			<Text size="sm" class="description">
+				{truncate(description, 350)}
 			</Text>
 		</div>
 	</div>
 {/if}
 
 <style>
-	:global(.article-display--variant-full) {
+	/* <------ VARIANT FULL ------> */
+	.article-display--variant-full{
 		overflow: hidden;
-		aspect-ratio: 16/9;
+		aspect-ratio: 14/9;
 		position: relative;
 		height: 100%;
 		width: 100%;
 		border-radius: var(--border-radius-md);
 		overflow: hidden;
 	}
-	.article-display--variant-full__img {
+	:global(.article-display--variant-full__img) {
 		object-fit: cover;
 		height: 100%;
 		width: 100%;
 	}
-	:global(.article-display--variant-full__overlay) {
+	.article-display--variant-full__overlay {
 		position: absolute;
 		top: 0;
 		height: 100%;
 		width: 100%;
 		left: 0;
-		background: linear-gradient(#12121200, #12121266, #121212bb);
+		background: linear-gradient(#12121200,#12121200, #12121200,#12121222, #12121244,#12121266, #121212bb);
 		color: white;
+		gap:var(--space-sm);
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;
 		padding: var(--space-md);
 	}
-
 	:global(.article-display--variant-full__overlay > *) {
-		color: white !important;
+		color: var(--color-text-white) !important;;
 	}
+	:global(.article-display--variant-full__overlay > *):nth-child(1){
+		color: var(--color-text-white-weak) !important;;
+	}
+	/* <------ VARIANT FULL ------> */
 
-	:global(.article-display--variant-tiled) {
+	/* <------ VARIANT TILED ------> */
+	.article-display--variant-tiled {
 		display: flex;
+		text-decoration: none;
 		flex-direction: row;
 		height: fit-content;
 	}
@@ -111,13 +128,23 @@
 		gap: var(--space-xs);
 		padding-top: 0;
 	}
-	.article-display--variant-tiled__img {
+	:global(.article-display--variant-tiled__img) {
 		object-fit: cover;
 		aspect-ratio: 1/1;
 		max-width: 100px;
 		max-height: 100px;
 		border-radius: var(--border-radius-md);
 	}
+	@media (max-width: 768px) {
+		:global(.article-display--variant-tiled__img) {
+			max-width: 120px;
+			max-height: 120px;;
+		}
+		.article-display--variant-tiled {
+			min-width: 265px;
+		}
+	}
+	/* <------ VARIANT TILED ------> */
 
 	:global(.article-display--variant-detailed) {
 		display: flex;
@@ -131,7 +158,10 @@
 		flex: 1;
 		padding: var(--space-sm);
 		padding-top: 0;
+		overflow: hidden;		
+		gap:var(--space-sm);
 	}
+	
 	.article-display--variant-detailed__img {
 		object-fit: cover;
 		aspect-ratio: 16/9;

@@ -42,7 +42,6 @@
 		<Magnify />
 		<Input
 			name="query"
-			autofocus
 			{size}
 			on:input={requestSubmit}
 			on:focus={() => (isResultTrayOpen = true)}
@@ -64,6 +63,7 @@
 		justify-content: center;
 		position: relative;
 		max-width: 500px;
+		padding-bottom:0;
 		width: 100%;
 	}
 	.search-bar__input-container {

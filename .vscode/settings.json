@@ -6,8 +6,5 @@
 	"editor.defaultFormatter": "svelte.svelte-vscode",
 	"svelte.enable-ts-plugin": true,
 	"svelte.plugin.svelte.defaultScriptLanguage": "ts",
-	"editor.formatOnSave": true,
-	"[typescript]": {
-		"editor.defaultFormatter": "vscode.typescript-language-features"
-	}
+	"editor.formatOnSave": true
 }

@@ -6,6 +6,7 @@ import getSession from './services/getSession';
 import getUserProfile from './services/getUserProfile';
 import getArticleSource from './services/getArticleSource';
 import { createLinkedArticles } from './services/createLinkedArticle';
+import getLinkedArticles from "./services/getLinkedArticles";
 
 class Services {
 	public static createUserAccount = createUserAccount;
@@ -14,7 +15,9 @@ class Services {
 	public static getSession = getSession;
 	public static getUserProfile = getUserProfile;
 	public static createArticleSource = createArticleSource;
-	public static getArticleSource = getArticleSource;
+	
+  public static getArticleSource = getArticleSource;
+  public static getLinkedArticles = getLinkedArticles;
 	public static createLinkedArticles = createLinkedArticles;
 }
 

@@ -27,13 +27,13 @@
             {$$restProps.class}
             "
 	/>
-	{#if !error}
+	{#if !error && description}
 		<Text
 			size="sm"
 			color="weakest"
 			class="input__description {$$restProps.disabled ? 'disabled' : ''}">{description}</Text
 		>
-	{:else}
+	{:else if error}
 		<Text size="sm" color="red" class="input__error">{error}</Text>
 	{/if}
 </span>
@@ -53,6 +53,8 @@
 
 		width: 100%;
 		display: flex;
+		height: fit-content;
+	
 		flex-direction: column;
 	}
 	input {
